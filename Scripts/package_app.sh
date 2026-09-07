@@ -76,7 +76,11 @@ PY
 
 patch_keyboard_shortcuts
 
-swift build -c "$CONF"
+BUILD_ARGS=(-c "$CONF" --build-system native --disable-index-store)
+if [[ "$CONF" == "release" ]]; then
+  BUILD_ARGS+=(--arch arm64)
+fi
+swift build "${BUILD_ARGS[@]}"
 APP="$ROOT/Trimmy.app"
 APP_ENTITLEMENTS="$ROOT/Trimmy.entitlements"
 rm -rf "$APP"

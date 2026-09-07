@@ -46,6 +46,10 @@ jobs:
           fi
 
           BIN_DIR="$(swift build -c release --product TrimmyCLI --static-swift-stdlib --show-bin-path)"
+          source version.env
+          CLI_VERSION="$("$BIN_DIR/TrimmyCLI" --version)"
+          echo "$CLI_VERSION"
+          [[ "$CLI_VERSION" == "TrimmyCLI $MARKETING_VERSION" ]]
           OUT_DIR="$RUNNER_TEMP/trimmy-cli-out"
           mkdir -p "$OUT_DIR"
 
@@ -58,7 +62,7 @@ jobs:
           ASSET="TrimmyCLI-${TAG}-linux-${ARCH}.tar.gz"
           (cd "$BIN_DIR" && tar czf "$OUT_DIR/$ASSET" TrimmyCLI)
 
-          sha256sum "$OUT_DIR/$ASSET" > "$OUT_DIR/$ASSET.sha256"
+          (cd "$OUT_DIR" && sha256sum "$ASSET" > "$ASSET.sha256")
 
           {
             echo "tag=$TAG"

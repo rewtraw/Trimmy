@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.10.2 — Unreleased
+## 0.10.2 — 2026-09-06
 
 **Highlights:** Safer automatic updates and clipboard handling.
 
